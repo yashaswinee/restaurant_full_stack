@@ -19,8 +19,7 @@
     flex-direction: row;
     justify-content: flex-start;
     padding: 0 0 3rem;
-    gap: 1rem; /* Add gap between items if needed */
-
+    gap: 1rem;
 }
 
 .card__selectables-quantity select{

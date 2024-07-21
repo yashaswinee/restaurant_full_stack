@@ -6,7 +6,7 @@ const Items = [""];
 const Cards = ({ image, description }) => {
   return (
     <div>
-      <div className="card" style={{ height: "35rem" }}>
+      <div className="card" style={{ height: "35rem", maxWidth: '450px' }}>
         <img src={image} className="card-img-top" alt="..." />
         <div className="card-body">
           <h4 className="card-title">Card title</h4>
