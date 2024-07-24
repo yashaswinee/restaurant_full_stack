@@ -39,8 +39,13 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="gofood__navbar-container__login">
-          <Link to="/link">
+          <Link to="/login">
             <p>Login</p>
+          </Link>
+        </div>
+        <div className="gofood__navbar-container__signup">
+          <Link to="/signup">
+            <p>SignUp</p>
           </Link>
         </div>
       </div>

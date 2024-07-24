@@ -1,12 +1,12 @@
 import React from "react";
-import Cards from "../../containers/cards/Cards";
+import Cards from "../cards/Cards";
 import pizza from "../../assets/pizza.jpg";
 import burger from "../../assets/burger.jpg";
 import momos from "../../assets/momo.jpg";
 import ramen from "../../assets/ramen.jpg";
-import './body.css'
+import "./body.css";
 
-import Carousel from "../../containers/carousel/Carousel";
+import Carousel from "../carousel/Carousel";
 
 const CardsContent = [
   {
