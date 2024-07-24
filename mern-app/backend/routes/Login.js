@@ -2,6 +2,10 @@ const express = require("express");
 const router = express.Router();
 const userInfo = require('../models/User')
 const { body, validationResult } = require("express-validator");
+const jwt = require("jsonwebtoken") // for sessions
+const bcrypt = require("bcryptjs")
+
+const jwtSecret = "ThisIsRandomStringOfTwentyOneBit"
 
 router.post(
   "/login",
@@ -10,7 +14,6 @@ router.post(
   async (req, res) => {
 
     const email = req.body.email;
-    console.log(req.body);
     try {
       let userData = await userInfo.findOne({email});
       if (!userData) {
@@ -19,16 +22,24 @@ router.post(
           .json({ errors: "Invalid email or email doesn't exist" });
       }
 
-      if (userData.password !== req.body.password) {
+      let encryptedPass = await bcrypt.compare(req.body.password, userData.password);
+      if (!encryptedPass) {
         return res
-          .status(400)
-          .json({ errors: "password and email doesn't match" });
+        .status(400)
+        .json({ errors: "password and email doesn't match" });
       }
 
-      return res.status(200).json({ success: true });
+      const data = {
+        user: {
+          id: userData.id
+        }
+      }
+      const authToken = jwt.sign(data, jwtSecret)
+
+      return res.status(200).json({ success: true, authToken:authToken });
     } catch (err) {
       console.log("error message:: ",err);
-      res.json({ sucess: false });
+      res.json({ success: false });
     }
     return res;
   }

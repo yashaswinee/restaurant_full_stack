@@ -20,9 +20,11 @@ const Login = () => {
       body: JSON.stringify(creds),
     });
 
+    const json = await response.json();
     if (!response.ok) {
       alert("Enter valid credentials");
     } else if (response.ok) {
+      localStorage.setItem("authToken", json.authToken);
       navigate("/");
     }
   };
