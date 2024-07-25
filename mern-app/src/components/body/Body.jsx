@@ -48,7 +48,6 @@ const Body = () => {
                 return itemName.includes(searchQuery);
               })
               .map((item, index) => {
-                console.log(index, item);
                 return (
                   <Cards
                     title={item.name}

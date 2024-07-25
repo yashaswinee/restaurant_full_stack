@@ -15,19 +15,18 @@
   cursor: pointer;
 }
 
-.gofood__navbar-container,
-.gofood__navbar-links_container {
+.gofood__navbar-container{
   display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .gofood__navbar-container div {
   display: flex;
-  flex-direction: row;
   padding: 1rem 2rem;
 }
 
-.gofood__navbar-container p,
-.gofood__navbar-links_container p {
+.gofood__navbar-container p{
   color: #000;
   font-family: var(--font-family);
   font-size: 20px;
@@ -37,15 +36,8 @@
   cursor: pointer;
 }
 
-.gofood__navbar-container a,
-.gofood__navbar-links_container a {
+.gofood__navbar-container a{
   text-decoration: none;
-}
-
-.gofood__navbar-links_container {
-  display: none;
-  margin-left: 1rem;
-  position: relative;
 }
 
 .gofood__navbar-menu{
@@ -79,11 +71,13 @@
   background: var(--bg-gradient);
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 950px) {
   .gofood__navbar-container {
+    padding: var(section__padding);
     display: none;
   }
   .gofood__navbar-menu {
+    z-index: 10;
     display: flex;
   }
   .gofood__navbar-menu_-container a {
