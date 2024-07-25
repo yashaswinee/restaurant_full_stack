@@ -1,50 +1,65 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import Cards from "../cards/Cards";
 import pizza from "../../assets/pizza.jpg";
 import burger from "../../assets/burger.jpg";
 import momos from "../../assets/momo.jpg";
-import ramen from "../../assets/ramen.jpg";
 import "./body.css";
 
 import Carousel from "../carousel/Carousel";
 
-const CardsContent = [
-  {
-    image: pizza,
-    description:
-      "Some quick example text to build on the card title and make up the bulk of the card's content.",
-  },
-  {
-    image: burger,
-    description:
-      "Some quick example text to build on the card title and make up the bulk of the card's content.",
-  },
-  {
-    image: momos,
-    description:
-      "Some quick example text to build on the card title and make up the bulk of the card's content.",
-  },
-  {
-    image: ramen,
-    description:
-      "Some quick example text to build on the card title and make up the bulk of the card's content.",
-  },
-];
-
 const Body = () => {
+  const [foodCat, setFoodCat] = useState([]);
+  const [foodItem, setFoodItem] = useState([]);
+  const [search, setSearch] = useState("");
+
+  const getData = async () => {
+    let response = await fetch("http://localhost:5000/api/foodItems", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    response = await response.json();
+    setFoodCat(response[1]);
+    setFoodItem(response[0]);
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <div className="section__padding">
-      <Carousel img1={pizza} img2={burger} img3={momos} />
+      <Carousel
+        img1={pizza}
+        img2={burger}
+        img3={momos}
+        search={search}
+        setSearch={setSearch}
+      />
       <br />
 
       <div className="body__cards-container">
-        {CardsContent.map((item, index) => (
-          <Cards
-            image={item.image}
-            description={item.description}
-            key={item.description + index}
-          />
-        ))}
+        {foodItem != []
+          ? foodItem
+              .filter((item) => {
+                const itemName = item.name.toLowerCase();
+                const searchQuery = search.toLowerCase();
+                return itemName.includes(searchQuery);
+              })
+              .map((item, index) => {
+                console.log(index, item);
+                return (
+                  <Cards
+                    title={item.name}
+                    image={item.img}
+                    description={item.description}
+                    options={Object.entries(item.options[0])}
+                    key={item.description + index}
+                  />
+                );
+              })
+          : "No items found"}
       </div>
     </div>
   );

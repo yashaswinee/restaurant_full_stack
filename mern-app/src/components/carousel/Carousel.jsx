@@ -1,8 +1,9 @@
-import React from "react";
+import { React, useState } from "react";
 import "./carousel.css";
 import SearchOutlined from '@mui/icons-material/SearchOutlined';
 
-const Carousel = ({ img1, img2, img3 }) => {
+const Carousel = ({ img1, img2, img3, search, setSearch }) => {
+
   return (
     <div>
       <div
@@ -37,17 +38,19 @@ const Carousel = ({ img1, img2, img3 }) => {
 
           <div className="carousel-caption" id="carousel">
 
-            <form className="d-flex">
+            <div className="d-flex justify-content-center">
               <input
                 className="form-control me-2"
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
+                value={search}
+                onChange={(e) => {setSearch(e.target.value)}}
               />
-              <button className="btn btn-outline-success" type="submit">
+              {/* <button className="btn btn-outline-success" type="submit">
                 <SearchOutlined />
-              </button>
-            </form>
+              </button> */}
+            </div>
 
           </div>
 

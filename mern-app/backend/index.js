@@ -23,6 +23,7 @@ app.get('/', (req, res) => {
 
 app.use('/api', require("./routes/Signup"));
 app.use('/api', require("./routes/Login"));
+app.use('/api', require("./routes/DisplayFoodItems"));
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
