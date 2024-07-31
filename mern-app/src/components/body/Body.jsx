@@ -49,12 +49,8 @@ const Body = () => {
               })
               .map((item, index) => {
                 return (
-                  <Cards
-                    title={item.name}
-                    image={item.img}
-                    description={item.description}
+                  <Cards foodItem = {item}
                     options={Object.entries(item.options[0])}
-                    key={item.description + index}
                   />
                 );
               })
