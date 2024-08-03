@@ -3,10 +3,15 @@ import { Link, useNavigate } from "react-router-dom";
 import "./navbar.css";
 import Logo from "../../assets/logo-trsp.png";
 import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
-
+import { Badge } from "react-bootstrap";
+import { useCartState } from "../ContextReducer";
+import Modal from "../../Modal";
+import Cart from "../../pages/cart/Cart";
 
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
+  let data = useCartState();
+  const [cartView, setCartView] = useState(false); // to see if the cart view is open
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -14,15 +19,26 @@ const Navbar = () => {
     navigate("/login");
   };
 
+const handleModal =() =>{
+  return(
+    data.length ? setCartView(true) : alert("Your cart is empty")
+  )
+}
+
   const Menu = () => {
     return (
       <>
         <div>
           <div className="gofood__navbar-container__myorders">
-            <Link to="/mycart  ">
-              <p>My Cart</p>
-            </Link>
+            <p onClick={handleModal}>My Cart</p>
+            <Badge pill bg="danger">
+              {data.length ? data.length : null}
+            </Badge>
           </div>
+
+          {cartView ? (
+            <Modal onClose={() => setCartView(false)}><Cart></Cart></Modal>
+          ) : null}
 
           <div
             className="gofood__navbar-container__logout"

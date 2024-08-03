@@ -44,8 +44,7 @@ const Cards = ({ foodItem, options }) => {
             </div>
 
             <div className="card__selectables-portions">
-              <select defaultValue="" ref={priceRef} onChange={(e)=> {setSize(e.target.value)}}>
-                <option value="">select a size</option>
+              <select ref={priceRef} onChange={(e)=> {setSize(e.target.value)}}>
                 {pricekeys.map((item) => {
                   return (
                     <option key={item} value={item}>
