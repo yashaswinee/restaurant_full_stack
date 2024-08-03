@@ -10,17 +10,43 @@ const Cards = ({ foodItem, options }) => {
   let description = foodItem.description;
   let priceRef = useRef(0);
 
+  let data = useCartState();
   let dispatch = useDispatch();
-  const[qty, setQty] = useState(1);
-  const[size, setSize] = useState("");
+  const [qty, setQty] = useState(1);
+  const [size, setSize] = useState("");
 
-  let finalPrice = qty*parseInt(size.split(',')[1]); // final price of each food item
-  const handleCart = async ()=>{
-    await dispatch({ type: "ADD", id:foodItem.id, name:foodItem.name, price:finalPrice, qty:qty, size: size })
-  }
-  useEffect(()=>{ // to call this when we refer to priceRef - this update the ui
-    setSize(priceRef.current.value)
-  }, [])
+  let finalPrice = qty * parseInt(size.split(",")[1]); // final price of each food item
+  const handleCart = async () => {
+    let food = [];
+    for (let item of data) {
+      if (item.id === foodItem._id && item.size === size) {
+        food = item;
+        break;
+      }
+    }
+    if (food.length != 0) {
+      await dispatch({
+        type: "UPDATE",
+        id: foodItem._id,
+        price: finalPrice,
+        qty: qty,
+      });
+      return;
+    }
+    await dispatch({
+      type: "ADD",
+      id: foodItem._id,
+      name: foodItem.name,
+      price: finalPrice,
+      qty: qty,
+      size: size,
+    });
+    return;
+  };
+  useEffect(() => {
+    // to call this when we refer to priceRef - this update the ui
+    setSize(priceRef.current.value);
+  }, []);
 
   return (
     <div>
@@ -32,7 +58,7 @@ const Cards = ({ foodItem, options }) => {
 
           <div className="card__selectables">
             <div className="card__selectables-quantity">
-              <select onChange={(e)=> setQty(e.target.value)}>
+              <select onChange={(e) => setQty(e.target.value)}>
                 {Array.from(Array(10), (e, i) => {
                   return (
                     <option key={i} value={i + 1}>
@@ -44,7 +70,12 @@ const Cards = ({ foodItem, options }) => {
             </div>
 
             <div className="card__selectables-portions">
-              <select ref={priceRef} onChange={(e)=> {setSize(e.target.value)}}>
+              <select
+                ref={priceRef}
+                onChange={(e) => {
+                  setSize(e.target.value);
+                }}
+              >
                 {pricekeys.map((item) => {
                   return (
                     <option key={item} value={item}>
@@ -58,7 +89,7 @@ const Cards = ({ foodItem, options }) => {
           <hr />
           <div className="footer">
             <div className="card__selectables-cart">
-              <ShoppingCartIcon onClick={handleCart}/>
+              <ShoppingCartIcon onClick={handleCart} />
             </div>
 
             <div className="d-inline h-100">total: ₹{finalPrice}</div>

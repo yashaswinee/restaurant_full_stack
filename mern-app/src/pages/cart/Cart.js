@@ -10,7 +10,6 @@ const Cart = () => {
 
   return (
     <div>
-      {console.log(data)}
       <div className="gofood__mycart">
         <div className="gofood__mycart-container">
           <table className="table table-striped table-dark">

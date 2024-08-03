@@ -20,6 +20,15 @@ const reducer = (state, action) => {
       let stateCopy = [...state];
       stateCopy.splice(action.index, 1);
       return stateCopy;
+    case "UPDATE":
+        let updateArr = [...state];
+        updateArr.find((food, index) =>{
+            if(food.id === action.id){
+                updateArr[index] = {...food, qty: parseInt(action.qty), price: action.price}
+                return updateArr;
+            }
+        })
+      return updateArr;
     default:
       console.log("Error in reducer");
   }
